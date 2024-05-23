@@ -1,0 +1,123 @@
+﻿@model PatientWebApi.ViewModels.PatientViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>PatientViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           @*  <div class="form-group">
+                <label asp-for="PatienId" class="control-label"></label>
+                <input asp-for="PatienId" class="form-control" />
+                <span asp-validation-for="PatienId" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="PatientName" class="control-label"></label>
+                <input asp-for="PatientName" class="form-control" />
+                <span asp-validation-for="PatientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Disease Name</label>
+                <select class="form-control" asp-for="DiseaseID" asp-items="@(new SelectList(Model.DiseaseInformation, "DiseaseID", "DiseaseName"))"></select>
+                <span asp-validation-for="DiseaseID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Allergie Name</label>
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <ul id="allergieslist1" style="border: 1px solid black; width: 200px; height: 200px; overflow-y: scroll;">
+                            @foreach (var item in Model.Allergies)
+                            {
+                                <li ondblclick="moveToSelectedallergies(this)" data-id="@item.AllergiesID">@item.AllergiesName</li>
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        <ul id="allergieslist2" style="border: 1px solid black; width: 200px; height: 200px; overflow-y: scroll;">
+                            @foreach (var item in Model.SelectedAllergies)
+                            {
+                                <li ondblclick="moveToSelectedallergies(this)" data-id="@item.AllergiesID">@item.AllergiesName</li>
+                                <input type="hidden" name="SelectedAllergiesIds" value="@item.AllergiesID" />
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Noncommunicable diseases</label>
+@*                 <select class="form-control" asp-for="NcdId" asp-items="@(new SelectList(Model.NCDs, "NCDID", "NCDName"))"></select>
+                <span asp-validation-for="NcdId" class="text-danger"></span>
+
+ *@
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <ul id="ncdlist1" style="border: 1px solid black; width: 200px; height: 200px; overflow-y: scroll;">
+                            @foreach (var item in Model.NCDs)
+                            {
+                                <li ondblclick="moveToSelectedncd(this)" data-id="@item.NCDID">@item.NCDName</li>
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        <ul id="ncdlist2" style="border: 1px solid black; width: 200px; height: 200px; overflow-y: scroll;">
+                            @foreach (var item in Model.SelectedNCDs)
+                            {
+                                <li ondblclick="moveToSelectedncd(this)" data-id="@item.NCDID">@item.NCDName</li>
+                                <input type="hidden" name="SelectedNcdIds" value="@item.NCDID" />
+                            } 
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function moveToSelectedallergies(item) {
+            $(item).remove();
+            var id = $(item).data('id');
+            $('#allergieslist2').append('<li ondblclick="moveToAllallergies(this)" data-id="' + id + '">' + $(item).text() + '</li>');
+            $('#allergieslist2').append('<input type="hidden" name="SelectedAllergiesIds" value="' + id + '" />');
+        }
+
+        function moveToAllallergies(item) {
+            $(item).remove();
+            var id = $(item).data('id');
+            $('#allergieslist1').append('<li ondblclick="moveToSelectedallergies(this)" data-id="' + id + '">' + $(item).text() + '</li>');
+            $('input[name="SelectedAllergiesIds"][value="' + id + '"]').remove();
+        }
+
+        function moveToSelectedncd(item) {
+            $(item).remove();
+            var id = $(item).data('id');
+            $('#ncdlist2').append('<li ondblclick="moveToAllncd(this)" data-id="' + id + '">' + $(item).text() + '</li>');
+            $('#ncdlist2').append('<input type="hidden" name="SelectedNcdIds" value="' + id + '" />');
+        }
+
+        function moveToAllncd(item) {
+            $(item).remove();
+            var id = $(item).data('id');
+            $('#ncdlist1').append('<li ondblclick="moveToSelectedncd(this)" data-id="' + id + '">' + $(item).text() + '</li>');
+            $('input[name="SelectedNcdIds"][value="' + id + '"]').remove();
+        }
+    </script>
+}
+

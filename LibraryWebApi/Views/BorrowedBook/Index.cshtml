@@ -1,0 +1,66 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.BorrowedBook>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BorrowedBookID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BorrowDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReturnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowedBookID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BorrowedBookID }) |
+                
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BorrowedBookID })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

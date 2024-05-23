@@ -1,0 +1,53 @@
+﻿@model PatientWebApi.ViewModels.PatientViewModel
+
+@{
+    ViewData["Title"] = "EditA";
+}
+
+<h1>EditA</h1>
+
+<h4>PatientViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditA">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           @*  <div class="form-group">
+                <label asp-for="PatienId" class="control-label"></label>
+                <input asp-for="PatienId" class="form-control" />
+                <span asp-validation-for="PatienId" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="PatientName" class="control-label"></label>
+                <input asp-for="PatientName" class="form-control" />
+                <span asp-validation-for="PatientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Allergie Name</label>
+                <select class="form-control" asp-for="AllergieId" asp-items="@(new SelectList(Model.Allergies, "AllergiesID", "AllergiesName"))"></select>
+                <span asp-validation-for="AllergieId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Disease Name</label>
+                <select class="form-control" asp-for="DiseaseID" asp-items="@(new SelectList(Model.DiseaseInformation, "DiseaseID", "DiseaseName"))"></select>
+                <span asp-validation-for="DiseaseID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Noncommunicable diseases</label>
+                <select class="form-control" asp-for="NcdId" asp-items="@(new SelectList(Model.NCDs, "NCDID", "NCDName"))"></select>
+                <span asp-validation-for="NcdId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

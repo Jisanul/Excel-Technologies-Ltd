@@ -1,0 +1,41 @@
+﻿@model IEnumerable<LibraryManagementSystem.Models.Allergies>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AllergiesID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllergiesName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllergiesID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllergiesName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.AllergiesID  }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.AllergiesID  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
